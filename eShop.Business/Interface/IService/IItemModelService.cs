@@ -1,6 +1,7 @@
 ﻿using eShop.Business.Entity;
+using eShop.Business.Model;
 using eShop.Business.ServiceRes;
-using NMT.Model.Model;
+using System.Threading.Tasks;
 
 namespace eShop.Business.Interface.IService
 {
@@ -11,6 +12,6 @@ namespace eShop.Business.Interface.IService
         /// </summary>
         /// <param name="itemModel"></param>
         /// <returns></returns>
-        public ServiceResponse SaveItemModel(ItemModel itemModel);
+        Task<ServiceResponse> SaveItemModel(ItemModel itemModel);
     }
 }

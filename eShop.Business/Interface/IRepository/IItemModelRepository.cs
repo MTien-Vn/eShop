@@ -1,7 +1,4 @@
-﻿using NMT.Model.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using eShop.Business.Entity;
 
 namespace eShop.Business.Interface.IRepository
 {

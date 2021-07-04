@@ -1,4 +1,4 @@
-﻿using NMT.Model.Entity;
+﻿using eShop.Business.Entity;
 
 namespace eShop.Business.Interface.IRepository.IVendorRepository
 {

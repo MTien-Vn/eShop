@@ -3,6 +3,8 @@ using eShop.Business.Interface.IRepository;
 using eShop.Business.ServiceRes;
 using eShop.Business.Entity;
 using eShop.Business.Model;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace eShop.Business.ServiceImp
 {
@@ -14,7 +16,7 @@ namespace eShop.Business.ServiceImp
             itemRepository = _itemRepository;
         }
 
-        public ServiceResponse SaveItemModel(ItemModel itemModel)
+        public Task<ServiceResponse> SaveItemModel(ItemModel itemModel)
         {
             //List<Vendor> vendors = itemModel.vendors;
             //Item item = itemModel.item;
@@ -64,6 +66,24 @@ namespace eShop.Business.ServiceImp
             //    return serResultItem;
             //}
             return null;
+        }
+
+        public override async Task<ServiceResponse> GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
+        {
+            var model = new GeneralModel<ItemModel>();
+            var total_record = await itemRepository.CountEntity(fieldNames, values);
+            model.total_record = total_record;
+            var sr = await base.GetEntity(page, limmit, fieldNames, values);
+            if(sr.MisaCode == sShop.Business.Enum.MyEnum.False)
+            {
+                return sr;
+            }
+            else
+            {
+                model.items = (List<ItemModel>)sr.Data;
+                sr.Data = model;
+            }
+            return sr;
         }
     }
 }

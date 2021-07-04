@@ -7,6 +7,7 @@ using eShop.Business.ServiceRes;
 using Misa.BL.Properties;
 using sShop.Business.Enum;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Misa.BL.ServiceImp
 {
@@ -18,10 +19,10 @@ namespace Misa.BL.ServiceImp
             statisticTotalAmountByMonthRepository = _repository;
         }
 
-        public ServiceResponse getData(int param)
+        public async Task<ServiceResponse> getData(int param)
         {
             ServiceResponse sr = new ServiceResponse();
-            var dbConnection = statisticTotalAmountByMonthRepository.GetDBConnection();
+            var dbConnection = await statisticTotalAmountByMonthRepository.GetDBConnection();
 
             var storeName = $"func_get_statistic_total_amount_by_month";
             DynamicParameters dynamicParameters = new DynamicParameters();

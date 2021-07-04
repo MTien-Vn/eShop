@@ -3,6 +3,7 @@ using eShop.Business.Interface.IDBConnector;
 using eShop.Business.Interface.IRepository;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace eShop.Repository.RepositoryImp
 {
@@ -14,34 +15,34 @@ namespace eShop.Repository.RepositoryImp
             _iDbConnector = iDBConnector;
         }
 
-        public IEnumerable<T> GEtDataBySQL(string sql)
+        public async Task<IEnumerable<T>> GEtDataBySQL(string sql)
         {
-            return _iDbConnector.GetData<T>(sql);
+            return await _iDbConnector.GetData<T>(sql);
         }
 
-        public virtual IEnumerable<T> GetData(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
+        public virtual async Task<IEnumerable<T>> GetData(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
         {
-            return _iDbConnector.GetData<T>(page, limmit, fieldNames, values);
+            return await _iDbConnector.GetData<T>(page, limmit, fieldNames, values);
         }
 
-        public T InsertEntity(T entity)
+        public async Task<T> InsertEntity(T entity)
         {
-            return _iDbConnector.Insert<T>(entity);
+            return await _iDbConnector.Insert<T>(entity);
         }
 
-        public T UpdateEntity(T entity)
+        public async Task<T> UpdateEntity(T entity)
         {
-            return _iDbConnector.Update<T>(entity);
+            return await _iDbConnector.Update<T>(entity);
         }
 
-        public long CountEntity(List<string> fieldNames = null, List<string> values = null)
+        public async Task<long> CountEntity(List<string> fieldNames = null, List<string> values = null)
         {
-            return _iDbConnector.Count<T>(fieldNames, values);
+            return await _iDbConnector.Count<T>(fieldNames, values);
         }
 
-        public int DeleteEntity(List<string> fieldNames = null, List<string> values = null)
+        public async Task<int> DeleteEntity(List<string> fieldNames = null, List<string> values = null)
         {
-            return _iDbConnector.Delete<T>(fieldNames, values);
+            return await _iDbConnector.Delete<T>(fieldNames, values);
         }
 
         public IDbConnection GetDBConnection()
@@ -49,11 +50,11 @@ namespace eShop.Repository.RepositoryImp
             return _iDbConnector.GetDBConnection();
         }
 
-        public string GetEntityCodeMax()
+        public async Task<string> GetEntityCodeMax()
         {
             var tableName = typeof(T).Name.ToLower();
             var storeName = $"func_get_{tableName}_code_max";
-            string entityCodeMax = (string)GetDBConnection().ExecuteScalar(storeName, commandType: CommandType.StoredProcedure);
+            string entityCodeMax = (string)await GetDBConnection().ExecuteScalarAsync(storeName, commandType: CommandType.StoredProcedure);
             return entityCodeMax;
         }
     }

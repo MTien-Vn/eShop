@@ -1,5 +1,6 @@
 ﻿using eShop.Business.ServiceRes;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eShop.Business.Interface.IService
 {
@@ -16,7 +17,7 @@ namespace eShop.Business.Interface.IService
         /// <param name="values"></param>
         /// <returns>danh sách các bản ghi</returns>
         /// creadtedBy: Mạnh TIến(5/2/2020)
-        ServiceResponse GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null);
+        Task<ServiceResponse> GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null);
 
         /// <summary>
         /// lấy thông tin đối tượng bằng id
@@ -24,7 +25,7 @@ namespace eShop.Business.Interface.IService
         /// <param name="id"></param>
         /// <returns>thông tin đối tượng</returns>
         /// creadtedBy: Mạnh TIến(5/2/2020)
-        ServiceResponse GetEntityById(string id);
+        Task<ServiceResponse> GetEntityById(string id);
         #endregion
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace eShop.Business.Interface.IService
         /// </summary>
         /// <param name="entity"></param>
         /// <returns>số khách hàng được thêm</returns>
-        ServiceResponse InsertT(T entity);
+        Task<ServiceResponse> InsertT(T entity);
 
         /// <summary>
         /// Cập nhật bản ghi
@@ -40,7 +41,7 @@ namespace eShop.Business.Interface.IService
         /// <param name="entity"></param>
         /// <returns>Số lượng bản ghi được cập nhật</returns>
         /// /// CreadtedBy: Mạnh Tiến(25/12/2020)
-        ServiceResponse UpdateT(T entity, string id);
+        Task<ServiceResponse> UpdateT(T entity, string id);
 
         /// <summary>
         /// Xóa bản ghi theo trường của đối tượng
@@ -48,20 +49,20 @@ namespace eShop.Business.Interface.IService
         /// <param name="entity"></param>
         /// <returns>Số lượng bản ghi được xóa</returns>
         /// /// CreadtedBy: Mạnh Tiến(25/12/2020)
-        ServiceResponse DeleteT(List<string> fieldNames = null, List<string> values = null);
+        Task<ServiceResponse> DeleteT(List<string> fieldNames = null, List<string> values = null);
 
         /// <summary>
         /// tính số bản ghi trong database
         /// </summary>
         /// <returns>Số lượng bản ghi</returns>
         /// createdBy: Mạnh Tiến(27/12/2020)
-        ServiceResponse CountEntity(List<string> fieldNames = null, List<string> values = null);
+        Task<ServiceResponse> CountEntity(List<string> fieldNames = null, List<string> values = null);
 
         /// <summary>
         /// lấy mã nhân viên lớn nhất
         /// </summary>
         /// <returns>mã lớn nhất</returns>
         /// createdBy: Mạnh Tiến(3/1/2020)
-        ServiceResponse GetEntityCodeMax();
+        Task<ServiceResponse> GetEntityCodeMax();
     }
 }

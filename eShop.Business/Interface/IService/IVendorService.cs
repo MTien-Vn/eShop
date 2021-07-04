@@ -1,4 +1,6 @@
 ﻿using eShop.Business.Entity;
+using eShop.Business.ServiceRes;
+using System.Threading.Tasks;
 
 namespace eShop.Business.Interface.IService.IVendorService
 {
@@ -21,7 +23,7 @@ namespace eShop.Business.Interface.IService.IVendorService
         /// <param name="code"></param>
         /// <returns>thông tin nhân viên</returns>
         /// CreadtedBy: Mạnh Tiến(25/12/2020)
-        ServiceResponse GetVendorByVendorCode(string code);
+        Task<ServiceResponse> GetVendorByVendorCode(string code);
 
         /// <summary>
         /// kiểm tra sự tồn tại của số điện thoại
@@ -29,7 +31,7 @@ namespace eShop.Business.Interface.IService.IVendorService
         /// <param name="phoneNumber"></param>
         /// <returns>true-đã tồn tại/ false-chưa tồn tại</returns>
         /// CreadtedBy: Mạnh Tiến(25/12/2020)
-        ServiceResponse GetVendorByPhoneNumber(string phoneNumber);
+        Task<ServiceResponse> GetVendorByPhoneNumber(string phoneNumber);
 
         /// <summary>
         /// kiểm tra sự tồn tại của email
@@ -37,7 +39,7 @@ namespace eShop.Business.Interface.IService.IVendorService
         /// <param name="email"></param>
         /// <returns>true-đã tồn tại/ false-chưa tồn tại</returns>
         /// CreadtedBy: Mạnh Tiến(25/12/2020)
-        ServiceResponse GetVendorByEmail(string email);
+        Task<ServiceResponse> GetVendorByEmail(string email);
 
         /// <summary>
         /// lấy thông tinh nhà cung cấp bằng tên
@@ -48,7 +50,7 @@ namespace eShop.Business.Interface.IService.IVendorService
         /// <returns>danh sách nhân viên</returns>
         /// <returns>thông tin của nhân viên</returns>
         /// createdBy: Mạnh Tiến(26/12/2020)
-        ServiceResponse GetVendorByName(string name, long page, long limmit);
+        Task<ServiceResponse> GetVendorByName(string name, long page, long limmit);
         #endregion
 
         #region filter vendor
@@ -60,7 +62,7 @@ namespace eShop.Business.Interface.IService.IVendorService
         /// <param name="limmit"></param>
         /// <returns>danh sách các nhân viên</returns>
         /// createdBy: Mạnh Tiến(27/12/2020)
-        ServiceResponse filterVendor(string key, long page, long limmit);
+        Task<ServiceResponse> filterVendor(string key, long page, long limmit);
         #endregion
 
     }

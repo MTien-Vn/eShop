@@ -5,6 +5,7 @@ using eShop.Business.ValidateData;
 using Misa.BL.Properties;
 using sShop.Business.Enum;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eShop.Business.ServiceImp
 {
@@ -15,10 +16,10 @@ namespace eShop.Business.ServiceImp
         {
             baseRepository = _baseRepository;
         }
-        public virtual ServiceResponse CountEntity(List<string> fieldNames = null, List<string> values = null)
+        public virtual async Task<ServiceResponse> CountEntity(List<string> fieldNames = null, List<string> values = null)
         {
             ServiceResponse sr = new ServiceResponse();
-            var result =  baseRepository.CountEntity(fieldNames, values);
+            var result = await baseRepository.CountEntity(fieldNames, values);
             if(result >= 0)
             {
                 sr.MisaCode = MyEnum.Scuccess;
@@ -33,10 +34,10 @@ namespace eShop.Business.ServiceImp
             return sr;
         }
 
-        public ServiceResponse GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
+        public virtual async Task<ServiceResponse> GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
         {
             ServiceResponse sr = new ServiceResponse();
-            var result = baseRepository.GetData(page, limmit, fieldNames, values);
+            var result = await baseRepository.GetData(page, limmit, fieldNames, values);
             if (result != null)
             {
                 sr.MisaCode = MyEnum.Scuccess;
@@ -50,23 +51,23 @@ namespace eShop.Business.ServiceImp
             }
             return sr;
         }
-        public ServiceResponse GetEntityById(string id)
+        public async Task<ServiceResponse> GetEntityById(string id)
         {
             var tableName = typeof(T).Name;
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add(tableName + "_id");
             values.Add(id);
-            return GetEntity(0, 1, fieldNames, values);
+            return await GetEntity(0, 1, fieldNames, values);
         }
 
-        public ServiceResponse InsertT(T entity)
+        public async Task<ServiceResponse> InsertT(T entity)
         {
             var validateObj = new ValidateObj<T>(baseRepository);
             var serviceResponse = validateObj.ValidateObject(entity, null);
             if (serviceResponse.MisaCode == MyEnum.Scuccess)
             {
-                var result = baseRepository.InsertEntity(entity);
+                var result = await baseRepository.InsertEntity(entity);
                 if (result != null)
                 {
                     serviceResponse.MisaCode = MyEnum.False;
@@ -83,13 +84,13 @@ namespace eShop.Business.ServiceImp
 
         }
 
-        public ServiceResponse UpdateT(T entity, string id)
+        public async Task<ServiceResponse> UpdateT(T entity, string id)
         {
             var validateObj = new ValidateObj<T>(baseRepository);
             var serviceResponse = validateObj.ValidateObject(entity, id);
             if (serviceResponse.MisaCode == MyEnum.Scuccess)
             {
-                var result = baseRepository.UpdateEntity(entity);
+                var result = await baseRepository.UpdateEntity(entity);
                 if(result != null)
                 {
                     serviceResponse.MisaCode = MyEnum.False;
@@ -105,10 +106,10 @@ namespace eShop.Business.ServiceImp
             return serviceResponse;
         }
 
-        public ServiceResponse DeleteT(List<string> fieldNames = null, List<string> values = null)
+        public async Task<ServiceResponse> DeleteT(List<string> fieldNames = null, List<string> values = null)
         {
             var serviceResponse = new ServiceResponse();
-            var res = baseRepository.DeleteEntity(fieldNames, values);
+            var res = await baseRepository.DeleteEntity(fieldNames, values);
             if (res == 0)
             {
                 serviceResponse.MisaCode = MyEnum.False;
@@ -122,10 +123,10 @@ namespace eShop.Business.ServiceImp
             return serviceResponse;
         }
 
-        public ServiceResponse GetEntityCodeMax()
+        public async Task<ServiceResponse> GetEntityCodeMax()
         {
             var sr = new ServiceResponse();
-            var result = baseRepository.GetEntityCodeMax();
+            var result = await baseRepository.GetEntityCodeMax();
             if (result != null)
             {
                 sr.MisaCode = MyEnum.Scuccess;

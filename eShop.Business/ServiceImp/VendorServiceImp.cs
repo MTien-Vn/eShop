@@ -1,7 +1,10 @@
 ﻿using eShop.Business.Entity;
 using eShop.Business.Interface.IRepository.IVendorRepository;
 using eShop.Business.Interface.IService.IVendorService;
+using eShop.Business.ServiceRes;
+using sShop.Business.Enum;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eShop.Business.ServiceImp.VendorServiceImp
 {
@@ -14,65 +17,65 @@ namespace eShop.Business.ServiceImp.VendorServiceImp
         }
 
         #region count vendor
-        public ServiceResponse CountVendorByKey(string key)
+        public async Task<ServiceResponse> CountVendorByKey(string key)
         {
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add("vendor_code");
             values.Add(key);
-            var sr = this.CountEntity(fieldNames, values);
+            var sr = await this.CountEntity(fieldNames, values);
             if(sr.MisaCode == MyEnum.False)
             {
                 fieldNames.Remove("vendor_code");
                 fieldNames.Add("vendor_name");
-                sr = this.CountEntity(fieldNames, values);
+                sr = await this.CountEntity(fieldNames, values);
             }
             return sr;
         }
         #endregion
 
         #region get vendor
-        
-        public ServiceResponse GetVendorByEmail(string email)
+
+        public async Task<ServiceResponse> GetVendorByEmail(string email)
         {
             ServiceResponse sr = new ServiceResponse();
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add("email");
             values.Add(email);
-            return this.GetEntity(0,10, fieldNames, values);
+            return await this.GetEntity(0,10, fieldNames, values);
         }
 
-        public ServiceResponse GetVendorByVendorCode(string code)
+        public async Task<ServiceResponse> GetVendorByVendorCode(string code)
         {
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add("vendor_code");
             values.Add(code);
-            return this.GetEntity(0, 10, fieldNames, values);
+            return await this.GetEntity(0, 10, fieldNames, values);
         }
 
-        public ServiceResponse GetVendorByPhoneNumber(string phoneNumber)
+        public async Task<ServiceResponse> GetVendorByPhoneNumber(string phoneNumber)
         {
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add("phone_number");
             values.Add(phoneNumber);
-            return this.GetEntity(0, 10, fieldNames, values);
+            return await this.GetEntity(0, 10, fieldNames, values);
         }
 
-        public string GetVendorCodeMax()
+        public async Task<string> GetVendorCodeMax()
         {
-            return vendorRepository.GetEntityCodeMax();
+            return await vendorRepository.GetEntityCodeMax();
         }
 
-        public ServiceResponse GetVendorByName(string name, long page, long limmit)
+        public async Task<ServiceResponse> GetVendorByName(string name, long page, long limmit)
         {
             List<string> fieldNames = new List<string>();
             List<string> values = new List<string>();
             fieldNames.Add("vendorName");
             values.Add(name);
-            return this.GetEntity(0, 10, fieldNames, values);
+            return await this.GetEntity(0, 10, fieldNames, values);
         }
         #endregion
 
@@ -130,12 +133,12 @@ namespace eShop.Business.ServiceImp.VendorServiceImp
         #endregion
 
         #region filter vendor
-        public ServiceResponse filterVendor(string key, long page, long limmit)
+        public async Task<ServiceResponse> filterVendor(string key, long page, long limmit)
         {
-            var result = this.GetVendorByVendorCode(key);
+            var result = await this.GetVendorByVendorCode(key);
             if(result.MisaCode == MyEnum.False && result.Data == null)
             {
-                result = this.GetVendorByName(key, page, limmit);
+                result = await this.GetVendorByName(key, page, limmit);
             }
             return result;
         }

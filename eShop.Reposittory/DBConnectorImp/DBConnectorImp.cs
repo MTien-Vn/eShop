@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eShop.Repository.DBConnectorImp
 {
@@ -22,7 +23,7 @@ namespace eShop.Repository.DBConnectorImp
         }
 
         #region get entity
-        public IEnumerable<T> GetData<T>(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
+        public async Task<IEnumerable<T>> GetData<T>(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
         {
             long offSet;
             if (page == 1)
@@ -40,7 +41,7 @@ namespace eShop.Repository.DBConnectorImp
             dynamicParameters.Add("@limmit", limmit);
             if (values == null)
             {
-                var entities = dbConnection.Query<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
                 return entities;
             }
             else
@@ -55,19 +56,19 @@ namespace eShop.Repository.DBConnectorImp
                     dynamicParameters.Add($"@{fielNameLowwer}", _values.GetValue(index));
                     index++;
                 }
-                var entities = dbConnection.Query<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
                 return entities;
             }
         }
 
-        public IEnumerable<T> GetData<T>(string sql)
+        public async Task<IEnumerable<T>> GetData<T>(string sql)
         {
-            var entity = dbConnection.Query<T>(sql);
+            var entity = await dbConnection.QueryAsync<T>(sql);
             return entity;
         }
         #endregion
 
-        public T Insert<T>(T entity)
+        public async Task<T> Insert<T>(T entity)
         {
             var tableName = typeof(T).Name.ToLower();
             var storeName = $"func_insert_{tableName}";
@@ -91,12 +92,12 @@ namespace eShop.Repository.DBConnectorImp
                 }
                 dynamicParameters.Add($"@{propertyName}", propertyValue);
             }
-            var affects = dbConnection.Query<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return affects;
+            var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+            return affects.FirstOrDefault();
         }
 
         
-        public T Update<T>(T entity)
+        public async Task<T> Update<T>(T entity)
         {
             var tableName = typeof(T).Name.ToLower();
             var storeName = $"func_update_{tableName}";
@@ -120,11 +121,11 @@ namespace eShop.Repository.DBConnectorImp
                 }
                 dynamicParameters.Add($"@{propertyName}", propertyValue);
             }
-            var affects = dbConnection.Query<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return affects;
+            var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+            return affects.FirstOrDefault();
         }
 
-        public int Delete<T>(List<string> fieldNames, List<string> values)
+        public async Task<int> Delete<T>(List<string> fieldNames, List<string> values)
         {
             var tableName = typeof(T).Name.ToLower();
             var storeName = $"func_delete_{tableName}_by";
@@ -138,18 +139,18 @@ namespace eShop.Repository.DBConnectorImp
                 dynamicParameters.Add($"@{fielNameLowwer}", values[index]);
                 index++;
             }
-            var affect = dbConnection.Execute(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+            var affect = await dbConnection.ExecuteAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
             return affect;
         }
 
         #region count entity
-        public long Count<T>(List<string> fieldNames = null, List<string> values = null)
+        public async Task<long> Count<T>(List<string> fieldNames = null, List<string> values = null)
         {
             var tableName = typeof(T).Name.ToLower();
             if (values == null)
             {
                 var storeName = $"func_count_{tableName}";
-                long total = (long)dbConnection.ExecuteScalar(storeName, commandType: CommandType.StoredProcedure);
+                long total = (long)await dbConnection.ExecuteScalarAsync(storeName, commandType: CommandType.StoredProcedure);
                 return total;
             }
             else
@@ -172,7 +173,7 @@ namespace eShop.Repository.DBConnectorImp
                         index++;
                     }
                 }
-                long total = (long)dbConnection.ExecuteScalar(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                long total = (long)await dbConnection.ExecuteScalarAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
                 return total;
             }
         }
