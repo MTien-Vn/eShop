@@ -1,3 +1,4 @@
+using eShop.Business.Entity.System;
 using eShop.Business.Interface.IDBConnector;
 using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IRepository.IVendorRepository;
@@ -11,6 +12,7 @@ using eShop.Repository.RepositoryImp.VendorRepositoryImp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +53,9 @@ namespace eShop.Api
             services.AddScoped<IVendorService, VendorServiceImp>();
             services.AddScoped<IItemModelService, ItemModelServiceImp>();
             services.AddScoped<IStatisticTotalAmountByMonthService, StatisticTotalAmountByMonthServiceImp>();
+
+            services.AddTransient<UserManager<User>, UserManager<User>>();
+            services.AddTransient<SignInManager<User>, SignInManager<User>>();
 
             services.AddCors();
 

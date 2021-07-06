@@ -65,7 +65,7 @@ namespace eShop.Business.ValidateData
                     //id == null-thêm mới   id != null-cập nhật
                     if(id == null)
                     {
-                        var entity = _baseRepository.GEtDataBySQL(sql).FirstOrDefault();
+                        var entity = _baseRepository.GEtDataBySQL(sql);
                         if (entity != null)
                         {
                             var checkDupAttribute = property.GetCustomAttributes(typeof(CheckDup), true).FirstOrDefault();
@@ -78,8 +78,8 @@ namespace eShop.Business.ValidateData
                     }
                     else
                     {
-                        var entity = _baseRepository.GEtDataBySQL(sql).FirstOrDefault();
-                        var entity2 = _baseRepository.GEtDataBySQL(sql2).FirstOrDefault();
+                        var entity = _baseRepository.GEtDataBySQL(sql);
+                        var entity2 = _baseRepository.GEtDataBySQL(sql2);
                         if (entity2 == null  && entity != null)
                         {
                             var checkDupAttribute = property.GetCustomAttributes(typeof(CheckDup), true).FirstOrDefault();
@@ -118,7 +118,7 @@ namespace eShop.Business.ValidateData
                     sqlCheckDupPair.Append("'");
 
                 }
-                var entity = _baseRepository.GEtDataBySQL(sqlCheckDupPair.ToString()).FirstOrDefault();
+                var entity = _baseRepository.GEtDataBySQL(sqlCheckDupPair.ToString());
                 if(entity != null)
                 {
                     flag++;

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Business", "eShop.Bus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Model", "Model\eShop.Model.csproj", "{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShop.Api", "eShop.Api\eShop.Api.csproj", "{C9A62FFB-6F53-4412-8DF8-867C8825C89B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Api", "eShop.Api\eShop.Api.csproj", "{C9A62FFB-6F53-4412-8DF8-867C8825C89B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
