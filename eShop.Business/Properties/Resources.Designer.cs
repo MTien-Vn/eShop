@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Misa.BL.Properties {
+namespace eShop.Business.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Misa.BL.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Misa.BL.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("eShop.Business.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Misa.BL.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to không tồn tại user_name.
+        /// </summary>
+        public static string Authen_false {
+            get {
+                return ResourceManager.GetString("Authen_false", resourceCulture);
             }
         }
         
@@ -174,6 +183,24 @@ namespace Misa.BL.Properties {
         public static string False {
             get {
                 return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User or pass sai.
+        /// </summary>
+        public static string SignIn_false {
+            get {
+                return ResourceManager.GetString("SignIn_false", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đăng nhập thành công.
+        /// </summary>
+        public static string signIn_sucess {
+            get {
+                return ResourceManager.GetString("signIn_sucess", resourceCulture);
             }
         }
         

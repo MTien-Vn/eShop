@@ -6,6 +6,7 @@ using eShop.Business.Interface.IRepository;
 using eShop.Business.ServiceRes;
 using eShop.Business.Utils;
 using sShop.Business.Enum;
+using eShop.Business.Properties;
 
 namespace eShop.Business.ValidateData
 {
@@ -62,11 +63,16 @@ namespace eShop.Business.ValidateData
                 {
                     string sql = $"SELECT {propertyName} FROM {typeof(T).Name.ToLower()} WHERE {propertyName}='{propertyValue}'";
                     string sql2 = $"SELECT {propertyName} FROM {typeof(T).Name.ToLower()} WHERE {propertyName}='{propertyValue}' AND {typeof(T).Name.ToLower()}_id='{id}'";
+                    if(property.IsDefined(typeof(CheckSys), true))
+                    {
+                         sql = $"SELECT {propertyName} FROM system.{typeof(T).Name.ToLower()} WHERE {propertyName}='{propertyValue}'";
+                         sql2 = $"SELECT {propertyName} FROM system.{typeof(T).Name.ToLower()} WHERE {propertyName}='{propertyValue}' AND {typeof(T).Name.ToLower()}_id='{id}'";
+                    }
                     //id == null-thêm mới   id != null-cập nhật
                     if(id == null)
                     {
                         var entity = _baseRepository.GEtDataBySQL(sql);
-                        if (entity != null)
+                        if (entity.Result.Count() != 0)
                         {
                             var checkDupAttribute = property.GetCustomAttributes(typeof(CheckDup), true).FirstOrDefault();
                             var proName = (checkDupAttribute as CheckDup).PropertyName;
@@ -80,7 +86,7 @@ namespace eShop.Business.ValidateData
                     {
                         var entity = _baseRepository.GEtDataBySQL(sql);
                         var entity2 = _baseRepository.GEtDataBySQL(sql2);
-                        if (entity2 == null  && entity != null)
+                        if (entity2.Result.Count() != 0  && entity.Result.Count() == 0)
                         {
                             var checkDupAttribute = property.GetCustomAttributes(typeof(CheckDup), true).FirstOrDefault();
                             var proName = (checkDupAttribute as CheckDup).PropertyName;
@@ -119,7 +125,7 @@ namespace eShop.Business.ValidateData
 
                 }
                 var entity = _baseRepository.GEtDataBySQL(sqlCheckDupPair.ToString());
-                if(entity != null)
+                if(entity.Result.Count() == 0)
                 {
                     flag++;
                     var checkDupAttribute = propCheckDupPair[0].GetCustomAttributes(typeof(CheckDupPair), true).FirstOrDefault();
@@ -130,7 +136,7 @@ namespace eShop.Business.ValidateData
             }
             if(flag == 0)
             {
-                serviceResultOk.Messenger.Add(Misa.BL.Properties.Resources.Success);
+                serviceResultOk.Messenger.Add(Resources.Success);
                 serviceResultOk.MisaCode = MyEnum.Scuccess;
                 return serviceResultOk;
             }

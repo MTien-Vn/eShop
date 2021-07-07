@@ -2,9 +2,9 @@
 using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IService;
 using eShop.Business.Model;
+using eShop.Business.Properties;
 using eShop.Business.ServiceImp;
 using eShop.Business.ServiceRes;
-using Misa.BL.Properties;
 using sShop.Business.Enum;
 using System.Data;
 using System.Threading.Tasks;
