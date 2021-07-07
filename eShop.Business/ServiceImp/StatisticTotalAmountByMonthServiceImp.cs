@@ -2,9 +2,9 @@
 using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IService;
 using eShop.Business.Model;
+using eShop.Business.Properties;
 using eShop.Business.ServiceImp;
 using eShop.Business.ServiceRes;
-using Misa.BL.Properties;
 using sShop.Business.Enum;
 using System.Data;
 using System.Threading.Tasks;
@@ -22,12 +22,12 @@ namespace Misa.BL.ServiceImp
         public async Task<ServiceResponse> getData(int param)
         {
             ServiceResponse sr = new ServiceResponse();
-            var dbConnection = await statisticTotalAmountByMonthRepository.GetDBConnection();
+            var dbConnection =  statisticTotalAmountByMonthRepository.GetDBConnection();
 
             var storeName = $"func_get_statistic_total_amount_by_month";
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@year_in", param);
-            var entities = dbConnection.Query<Statistic_Total_Amount_By_Month>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+            var entities = await dbConnection.QueryAsync<Statistic_Total_Amount_By_Month>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
             if(entities != null)
             {
                 sr.MisaCode = MyEnum.Scuccess;

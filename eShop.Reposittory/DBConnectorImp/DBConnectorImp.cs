@@ -47,12 +47,12 @@ namespace eShop.Repository.DBConnectorImp
             else
             {
                 int index = 0;
-                storeName += "_by_";
+                storeName += "_by";
                 Array _values = values.ToArray();
                 foreach (var fieldName in fieldNames)
                 {
                     var fielNameLowwer = fieldName.ToLower();
-                    storeName += $"{fielNameLowwer}_";
+                    storeName += $"_{fielNameLowwer}";
                     dynamicParameters.Add($"@{fielNameLowwer}", _values.GetValue(index));
                     index++;
                 }

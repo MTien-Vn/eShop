@@ -1,4 +1,5 @@
 ﻿using eShop.Business.Utils;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace eShop.Business.Entity
@@ -6,7 +7,7 @@ namespace eShop.Business.Entity
     /// <summary>
     /// enttity ứng với bảng trong db
     /// </summary>
-    public class Employee : BaseModel
+    public class Employee : IdentityUser<Guid>
     {
         public string employee_id { get; set; }
 
@@ -41,8 +42,6 @@ namespace eShop.Business.Entity
         /// ca làm việc
         /// </summary>
         public int shift { get; set; }
-
-        public string pass_word { get; set; }
 
         /// <summary>
         /// ngay thu viec

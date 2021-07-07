@@ -1,8 +1,8 @@
 ﻿using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IService;
+using eShop.Business.Properties;
 using eShop.Business.ServiceRes;
 using eShop.Business.ValidateData;
-using Misa.BL.Properties;
 using sShop.Business.Enum;
 using System.Collections.Generic;
 using System.Threading.Tasks;

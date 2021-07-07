@@ -53,6 +53,28 @@ namespace eShop.Business.Utils
     }
 
     /// <summary>
+    /// đánh dấu property cần check cua system
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class CheckSys : Attribute
+    {
+        /// <summary>
+        /// tên của property cần checkSys
+        /// </summary>
+        public string PropertyName;
+
+        /// <summary>
+        /// thông báo lỗi
+        /// </summary>
+        public string ErrorMesseger;
+        public CheckSys(string property, string errorMess = null)
+        {
+            this.PropertyName = property;
+            this.ErrorMesseger = errorMess;
+        }
+    }
+
+    /// <summary>
     /// đánh dấu property cần check dup theo cặp các properties
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
