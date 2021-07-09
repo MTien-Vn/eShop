@@ -40,7 +40,7 @@ namespace eShop.Business.System.Service
                 sr.Messenger.Add(Resources.Authen_false);
                 return sr;
             }
-            var result = await this.SignInUser(request.user_name, request.password);
+            var result = await this.SignInUser(request.user_name, request.pass_word);
             if(result == null)
             {
                 sr.MisaCode = MyEnum.False;

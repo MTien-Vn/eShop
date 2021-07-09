@@ -1,4 +1,3 @@
-using eShop.Business.Entity.System;
 using eShop.Business.Interface.IDBConnector;
 using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IRepository.IVendorRepository;
@@ -14,20 +13,13 @@ using eShop.Repository.RepositoryImp.VendorRepositoryImp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Misa.BL.ServiceImp;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eShop.Api
 {
@@ -129,6 +121,15 @@ namespace eShop.Api
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
+
+            //services.AddControllers().AddNewtonsoftJson(options =>
+            //{
+            //    // Use the default property (Pascal) casing
+            //    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            //});
+
+
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -140,6 +141,8 @@ namespace eShop.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eShop.Api v1"));
             }
+
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseHttpsRedirection();
 

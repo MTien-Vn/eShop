@@ -1,5 +1,6 @@
 ﻿using eShop.Business.Interface.IService;
 using eShop.Business.ServiceRes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace MISA_AMIS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BaseEntityController<T> : ControllerBase
     {
         IBaseService<T> baseService;
