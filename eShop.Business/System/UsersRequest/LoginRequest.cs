@@ -8,7 +8,7 @@ namespace eShop.Business.System.UsersRequest
     {
         public string user_name { get; set; }
 
-        public string password { get; set; }
+        public string pass_word { get; set; }
 
         public bool remember_me { get; set; }
     }
