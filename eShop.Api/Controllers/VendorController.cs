@@ -7,13 +7,13 @@ namespace MISA_AMIS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles ="admin")]
     public class VendorController : BaseEntityController<Vendor>
     {
         IVendorService vendorService;
         public VendorController(IVendorService _vendorService) : base(_vendorService)
         {
-            this.vendorService = _vendorService;
+            vendorService = _vendorService;
         }
         
     }
