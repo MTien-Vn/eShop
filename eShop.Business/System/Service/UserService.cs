@@ -17,6 +17,8 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Collections;
+using eShop.Business.System.UserResponse;
 
 namespace eShop.Business.System.Service
 {
@@ -49,11 +51,17 @@ namespace eShop.Business.System.Service
             }
 
             var roles = await this.GetRoles(request.user_name);
-
+            string[] arrRoles = new string[roles.Count()];
+            int index = 0;
+            foreach (var role in roles)
+            {
+                arrRoles[index] = role.role_name;
+                index++;
+            }
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.user_name),
-                new Claim(ClaimTypes.Role, string.Join(";", roles))
+                new Claim(ClaimTypes.Role, string.Join(";", arrRoles))
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -67,9 +75,13 @@ namespace eShop.Business.System.Service
 
             var data = new JwtSecurityTokenHandler().WriteToken(token);
 
+            var loginResponse = new LoginResponse();
+            loginResponse.token = data;
+            loginResponse.roles = arrRoles;
+
             sr.MisaCode = MyEnum.Scuccess;
             sr.Messenger.Add(Resources.signIn_sucess);
-            sr.Data = data;
+            sr.Data = loginResponse;
             return sr;
         }
 

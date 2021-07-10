@@ -12,9 +12,9 @@
         <p>Dashboard</p>
       </sidebar-link>
 
-      <sidebar-link to="/user">
+      <sidebar-link to="/system">
         <md-icon>person</md-icon>
-        <p>User Profile</p>
+        <p>System</p>
       </sidebar-link>
 
       <sidebar-link to="/importedItemLayout">

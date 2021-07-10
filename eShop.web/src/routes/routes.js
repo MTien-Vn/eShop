@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { Role } from '../helper/Enum';
 
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
+import System from "@/pages/System/Users.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
@@ -16,6 +17,7 @@ import Item from "@/pages/ImportedItem/Item.vue";
 import Invoice from "@/pages/ImportedItem/Invoice.vue";
 import Login from "@/pages/Login/Login.vue";
 import Register from "@/pages/Login/Register.vue";
+import UserProfile from "@/pages/UserProfile/UserProfile.vue";
 
 Vue.use(Router);
 
@@ -31,9 +33,15 @@ export const router = new Router({
                     component: Dashboard
                 },
                 {
-                    path: "user",
-                    name: "User Profile",
+                    path: "profile",
+                    name: "Profile",
                     component: UserProfile
+                },
+                {
+                    path: "system",
+                    name: "System",
+                    component: System,
+                    meta: { authorize: [Role.Admin] }
                 },
                 {
                     path: "table",
@@ -104,10 +112,20 @@ router.beforeEach((to, from, next) => {
     // chuyển đến trang login nếu chưa được login
     const publicPages = ['/login', '/register'];
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('token_user');
+    const loggedIn = localStorage.getItem('user');
 
     if (authRequired && !loggedIn) {
         return next('/login');
+    }
+    const { authorize } = to.meta;
+    var user = JSON.parse(loggedIn);
+
+    if (authorize) {
+        // check if route is restricted by role
+        if (authorize.length && !authorize.includes(user.roles.toString())) {
+            // role not authorised so redirect to home page
+            return next({ path: '/' });
+        }
     }
 
     next();

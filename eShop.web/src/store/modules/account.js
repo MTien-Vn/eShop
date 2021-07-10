@@ -1,8 +1,14 @@
 import { userService } from '../../service/userService.js';
 import { router } from '../../routes/routes';
 
-const token_user = JSON.parse(localStorage.getItem('token_user'));
-const state = token_user ? { status: { loggedIn: true }, token_user } : { status: {}, token_user: null };
+const user = JSON.parse(localStorage.getItem('user'));
+const state = user ? {
+    status: { loggedIn: true },
+    user
+} : {
+    status: {},
+    user: null
+};
 
 const actions = {
     login({ dispatch, commit }, { user_name, pass_word }) {
@@ -10,8 +16,8 @@ const actions = {
 
         userService.login(user_name, pass_word)
             .then(
-                token_user => {
-                    commit('loginSuccess', token_user);
+                response => {
+                    commit('loginSuccess', response);
                     router.push('/');
                 },
                 error => {
@@ -47,21 +53,21 @@ const actions = {
 };
 
 const mutations = {
-    loginRequest(state, token_user) {
+    loginRequest(state, user) {
         state.status = { loggingIn: true };
-        state.token_user = token_user;
+        state.token_user = user;
     },
-    loginSuccess(state, token_user) {
+    loginSuccess(state, user) {
         state.status = { loggedIn: true };
-        state.token_user = token_user;
+        state.user = user.token;
     },
     loginFailure(state) {
         state.status = {};
-        state.token_user = null;
+        state.user = null;
     },
     logout(state) {
         state.status = {};
-        state.token_user = null;
+        state.user = null;
     },
     registerRequest(state, user) {
         state.status = { registering: true };

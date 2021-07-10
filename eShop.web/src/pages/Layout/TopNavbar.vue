@@ -71,7 +71,7 @@
                     <p class="hidden-lg hidden-md">Notifications</p>
                   </md-button>
                   <ul class="dropdown-menu dropdown-menu-right">
-                    <li><router-link to="/user">Profile</router-link></li>
+                    <li><router-link to="/profile">Profile</router-link></li>
                     <li><a @click="handleLogout">Logout</a></li>
                   </ul>
                 </drop-down>

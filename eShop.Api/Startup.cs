@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Misa.BL.ServiceImp;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace eShop.Api
 {
@@ -121,6 +122,17 @@ namespace eShop.Api
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("admin",
+                     policy => policy.RequireRole("admin"));
+            });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("admin", policy => policy.RequireClaim("admin"));
+            //});
 
             //services.AddControllers().AddNewtonsoftJson(options =>
             //{
