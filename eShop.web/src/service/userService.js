@@ -35,15 +35,16 @@ async function login(user_name, pass_word) {
         user_name: user_name,
         pass_word: pass_word
     });
-    if (rs.data.misaCode !== 200) {
+    var response = rs.data;
+    if (response.misaCode !== 200) {
         logout();
         //location.reload(true);
-        alert(rs.data.messenger);
+        alert(response.messenger);
         return;
     }
-    var token = rs.data.data;
-    localStorage.setItem('token_user', JSON.stringify(token));
-    return token;
+
+    localStorage.setItem('user', JSON.stringify(response.data));
+    return response.data;
 }
 
 function logout() {
