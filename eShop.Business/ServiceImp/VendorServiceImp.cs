@@ -1,6 +1,8 @@
 ﻿using eShop.Business.Entity;
 using eShop.Business.Interface.IRepository.IVendorRepository;
 using eShop.Business.Interface.IService.IVendorService;
+using eShop.Business.Model;
+using eShop.Business.Properties;
 using eShop.Business.ServiceRes;
 using sShop.Business.Enum;
 using System.Collections.Generic;
@@ -15,24 +17,6 @@ namespace eShop.Business.ServiceImp.VendorServiceImp
         {
             vendorRepository = _vendorRepository;
         }
-
-        #region count vendor
-        public async Task<ServiceResponse> CountVendorByKey(string key)
-        {
-            List<string> fieldNames = new List<string>();
-            List<string> values = new List<string>();
-            fieldNames.Add("vendor_code");
-            values.Add(key);
-            var sr = await this.CountEntity(fieldNames, values);
-            if(sr.MisaCode == MyEnum.False)
-            {
-                fieldNames.Remove("vendor_code");
-                fieldNames.Add("vendor_name");
-                sr = await this.CountEntity(fieldNames, values);
-            }
-            return sr;
-        }
-        #endregion
 
         #region get vendor
 
@@ -133,7 +117,7 @@ namespace eShop.Business.ServiceImp.VendorServiceImp
         #endregion
 
         #region filter vendor
-        public async Task<ServiceResponse> filterVendor(string key, long page, long limmit)
+        public async Task<ServiceResponse> FilterVendor(string key, long page, long limmit)
         {
             var result = await this.GetVendorByVendorCode(key);
             if(result.MisaCode == MyEnum.False && result.Data == null)

@@ -49,7 +49,7 @@ async function login(user_name, pass_word) {
 
 function logout() {
     // xoá user từ local storage để log out
-    localStorage.removeItem('token_user');
+    localStorage.removeItem('user');
 }
 
 function register(user) {
@@ -68,7 +68,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${baseUrl}/users`, requestOptions).then(handleResponse);
 }
 
 
@@ -78,7 +78,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${baseUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function update(user) {

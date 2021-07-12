@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Repository", "eShop.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Business", "eShop.Business\eShop.Business.csproj", "{62D655D0-BA58-456F-B18C-A4BA2F52485D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Model", "Model\eShop.Model.csproj", "{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Api", "eShop.Api\eShop.Api.csproj", "{C9A62FFB-6F53-4412-8DF8-867C8825C89B}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{62D655D0-BA58-456F-B18C-A4BA2F52485D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62D655D0-BA58-456F-B18C-A4BA2F52485D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62D655D0-BA58-456F-B18C-A4BA2F52485D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94B68D5F-D091-4AAB-99C0-62E8F2BD5FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9A62FFB-6F53-4412-8DF8-867C8825C89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9A62FFB-6F53-4412-8DF8-867C8825C89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9A62FFB-6F53-4412-8DF8-867C8825C89B}.Release|Any CPU.ActiveCfg = Release|Any CPU

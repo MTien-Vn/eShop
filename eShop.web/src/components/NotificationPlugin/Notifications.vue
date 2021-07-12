@@ -1,52 +1,55 @@
 <template>
   <div class="notifications">
-    <transition-group name="list">
+    <slide-y-up-transition :duration="transitionDuration"
+                             group
+                             mode="out-in">
       <notification
         v-for="notification in notifications"
+        v-bind="notification"
+        :clickHandler="notification.onClick"
         :key="notification.timestamp.getTime()"
-        :message="notification.message"
-        :icon="notification.icon"
-        :type="notification.type"
-        :timestamp="notification.timestamp"
-        :vertical-align="notification.verticalAlign"
-        :horizontal-align="notification.horizontalAlign"
-        @on-close="removeNotification"
+        @close="removeNotification"
       >
       </notification>
-    </transition-group>
+    </slide-y-up-transition>
   </div>
 </template>
 <script>
-import Notification from "./Notification.vue";
-export default {
-  components: {
-    Notification
-  },
-  data() {
-    return {
-      notifications: this.$notifications.state
-    };
-  },
-  methods: {
-    removeNotification(timestamp) {
-      this.$notifications.removeNotification(timestamp);
+  import Notification from './Notification.vue';
+  import { SlideYUpTransition } from 'vue2-transitions';
+
+  export default {
+    components: {
+      SlideYUpTransition,
+      Notification
+    },
+    props: {
+      transitionDuration: {
+        type: Number,
+        default: 200
+      },
+      overlap: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        notifications: this.$notifications.state
+      };
+    },
+    methods: {
+      removeNotification(timestamp) {
+        this.$notifications.removeNotification(timestamp);
+      }
+    },
+    created() {
+      this.$notifications.settings.overlap = this.overlap;
+    },
+    watch: {
+      overlap: function (newVal) {
+        this.$notifications.settings.overlap = newVal;
+      }
     }
-  }
-};
+  };
 </script>
-<style lang="scss">
-.list-move {
-  transition: transform 0.3s, opacity 0.4s;
-}
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-.list-enter-active,
-.list-leave-active {
-  transition: opacity 0.4s;
-}
-.list-enter, .list-leave-to  /* .list-leave-active for <2.1.8 */ {
-  opacity: 0;
-}
-</style>

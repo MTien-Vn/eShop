@@ -1,4 +1,5 @@
 ﻿using sShop.Business.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace eShop.Business.ServiceRes
@@ -19,5 +20,10 @@ namespace eShop.Business.ServiceRes
         /// mã thông báo lỗi
         /// </summary>
         public MyEnum MisaCode { get; set; }
+
+        public static implicit operator List<object>(ServiceResponse v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
