@@ -1,5 +1,6 @@
 ﻿using eShop.Business.Interface.IRepository;
 using eShop.Business.Interface.IService;
+using eShop.Business.Model;
 using eShop.Business.Properties;
 using eShop.Business.ServiceRes;
 using eShop.Business.ValidateData;
@@ -38,11 +39,15 @@ namespace eShop.Business.ServiceImp
         {
             ServiceResponse sr = new ServiceResponse();
             var result = await baseRepository.GetData(page, limmit, fieldNames, values);
+            var count = await this.CountEntity(fieldNames, values);
+            var resData = new GeneralModel<T>();
             if (result != null)
             {
                 sr.MisaCode = MyEnum.Scuccess;
                 sr.Messenger.Add(Resources.Success);
-                sr.Data = result;
+                resData.items = (List<T>)result;
+                resData.total_record = (long)count.Data;
+                sr.Data = resData;
             }
             else
             {

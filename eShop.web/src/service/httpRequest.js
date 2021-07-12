@@ -2,7 +2,7 @@ import axios from 'axios';
 import { baseUrl } from '../configConnection.json'
 import { authHeader } from '../helper/auth-helper';
 
-export const HTTP = axios.create({
+export const HTTPRequest = axios.create({
         baseURL: baseUrl,
         headers: {
             Authorization: authHeader()

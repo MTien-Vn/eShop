@@ -1,5 +1,6 @@
 import { userService } from '../../service/userService.js';
-import { router } from '../../routes/routes';
+import { router } from '../../router/router';
+import { setAuthHeader } from "../modules/axiosHeaders";
 
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user ? {
@@ -18,6 +19,7 @@ const actions = {
             .then(
                 response => {
                     commit('loginSuccess', response);
+                    commit("setToken", response.token);
                     router.push('/');
                 },
                 error => {
@@ -29,7 +31,7 @@ const actions = {
     logout({ commit }) {
         userService.logout();
         commit('logout');
-        router.push('/login');
+        // router.push('/login');
     },
     register({ dispatch, commit }, user) {
         commit('registerRequest', user);
@@ -69,14 +71,18 @@ const mutations = {
         state.status = {};
         state.user = null;
     },
-    registerRequest(state, user) {
+    registerRequest(state) {
         state.status = { registering: true };
     },
-    registerSuccess(state, user) {
+    registerSuccess(state) {
         state.status = {};
     },
-    registerFailure(state, error) {
+    registerFailure(state) {
         state.status = {};
+    },
+    setToken(state, token) {
+        state.token = token;
+        setAuthHeader(token);
     }
 };
 
