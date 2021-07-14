@@ -8,10 +8,10 @@ using System.Collections.Generic;
 
 namespace eShop.Business.ServiceImp
 {
-    public class ItemModelServiceImp : BaseServiceImp<Item>, IItemModelService
+    public class ItemServiceImp : BaseServiceImp<ItemModel>, IItemService
     {
-        IItemModelRepository itemRepository;
-        public ItemModelServiceImp(IItemModelRepository _itemRepository) : base(_itemRepository)
+        IItemRepository itemRepository;
+        public ItemServiceImp(IItemRepository _itemRepository) : base(_itemRepository)
         {
             itemRepository = _itemRepository;
         }
@@ -66,24 +66,6 @@ namespace eShop.Business.ServiceImp
             //    return serResultItem;
             //}
             return null;
-        }
-
-        public override async Task<ServiceResponse> GetEntity(long page, long limmit, List<string> fieldNames = null, List<string> values = null)
-        {
-            var model = new GeneralModel<ItemModel>();
-            var total_record = await itemRepository.CountEntity(fieldNames, values);
-            model.total_record = total_record;
-            var sr = await base.GetEntity(page, limmit, fieldNames, values);
-            if(sr.MisaCode == sShop.Business.Enum.MyEnum.False)
-            {
-                return sr;
-            }
-            else
-            {
-                model.items = (List<ItemModel>)sr.Data;
-                sr.Data = model;
-            }
-            return sr;
         }
     }
 }

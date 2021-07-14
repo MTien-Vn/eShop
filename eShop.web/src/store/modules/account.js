@@ -11,6 +11,11 @@ const state = user ? {
     user: null
 };
 
+const getters = {
+    StateUser: (state) => state.user,
+    Token: (state) => state.user.token,
+};
+
 const actions = {
     login({ dispatch, commit }, { user_name, pass_word }) {
         commit('loginRequest', { user_name });
@@ -51,17 +56,26 @@ const actions = {
                     dispatch('alert/error', error, { root: true });
                 }
             );
+    },
+    checkToken({ dispatch, commit }) {
+
+        let token = this.getters.Token;
+        if (!token) {
+            dispatch("logout");
+        } else {
+            commit("setToken", token);
+        }
     }
 };
 
 const mutations = {
     loginRequest(state, user) {
         state.status = { loggingIn: true };
-        state.token_user = user;
+        state.user = user;
     },
     loginSuccess(state, user) {
         state.status = { loggedIn: true };
-        state.user = user.token;
+        state.user = user;
     },
     loginFailure(state) {
         state.status = {};
@@ -81,7 +95,7 @@ const mutations = {
         state.status = {};
     },
     setToken(state, token) {
-        state.token = token;
+        //state.token = token;
         setAuthHeader(token);
     }
 };
@@ -90,5 +104,6 @@ export const account = {
     namespaced: true,
     state,
     actions,
-    mutations
+    mutations,
+    getters
 };

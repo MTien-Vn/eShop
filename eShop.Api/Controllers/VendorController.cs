@@ -1,5 +1,6 @@
 ﻿using eShop.Business.Entity;
 using eShop.Business.Interface.IService.IVendorService;
+using eShop.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eShop.Business.Interface.IService
 {
-    public interface IItemModelService : IBaseService<Item>
+    public interface IItemService : IBaseService<ItemModel>
     {
         /// <summary>
         /// lưu/ update sản phẩm  mới (có thể) kèm theo nhà cung cấp

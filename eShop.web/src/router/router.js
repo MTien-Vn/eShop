@@ -1,16 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { Role } from '../helper/Enum'
-import DashboardLayout from '@/layout/DashboardLayout'
 //import AuthLayout from '@/layout/AuthLayout'
 // import store from './store/index'
 
-import System from "@/views/System/SystemLayout.vue";
-import ImportedItemLayout from "@/views/ImportedItem/ImportedItemLayout.vue";
-import SellingItem from "@/views/SellingItem/SellingItemLayout.vue";
-import Vendor from "@/views/ImportedItem/Vendor.vue";
-import Item from "@/views/ImportedItem/Item.vue";
-import Invoice from "@/views/ImportedItem/Invoice.vue";
 
 Vue.use(Router)
 
@@ -21,7 +14,8 @@ export const router = new Router({
     routes: [{
             path: '/',
             redirect: 'dashboard',
-            component: DashboardLayout,
+            component: () =>
+                import ( /* webpackChunkName: "demo" */ '@/layout/DashboardLayout'),
             meta: {
                 authRequired: true
             },
@@ -74,36 +68,42 @@ export const router = new Router({
                     }
                 },
                 {
-                    path: "system",
+                    path: "/system",
                     name: "System",
-                    component: System,
+                    component: () =>
+                        import ( /* webpackChunkName: "demo" */ '../views/System/SystemLayout.vue'),
                     meta: { authorize: [Role.Admin] }
                 },
                 {
-                    path: "importedItem",
+                    path: "/importItem",
                     name: "ImportedItem",
-                    component: ImportedItemLayout,
+                    component: () =>
+                        import ( /* webpackChunkName: "demo" */ '../views/ImportedItem/ImportedItemLayout.vue'),
                     children: [{
                             path: "vendor",
                             name: "Vendor",
-                            component: Vendor
+                            component: () =>
+                                import ( /* webpackChunkName: "demo" */ '../views/ImportedItem/VendorList.vue'),
                         },
                         {
                             path: "item",
                             name: "Item",
-                            component: Item
+                            component: () =>
+                                import ( /* webpackChunkName: "demo" */ '../views/ImportedItem/ItemList.vue'),
                         },
                         {
                             path: "invoice",
                             name: "Invoice",
-                            component: Invoice
+                            component: () =>
+                                import ( /* webpackChunkName: "demo" */ '../views/ImportedItem/InvoiceList.vue'),
                         }
                     ]
                 },
                 {
-                    path: "sellingItem",
+                    path: "/sellingItem",
                     name: "Selling Item",
-                    component: SellingItem
+                    component: () =>
+                        import ( /* webpackChunkName: "demo" */ '../views/Tables.vue'),
                 },
             ]
         },

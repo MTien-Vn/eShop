@@ -1,4 +1,9 @@
 <template>
+<div class="row">
+  <div class="col-8 align-items-center">
+    Display {{(value - 1 )*perPage + 1}} - {{value * perPage}} / {{total}} record
+  </div>
+  <div class="col-4 justify-content-end">
   <ul class="pagination" :class="[size && `pagination-${size}`, align && `justify-content-${align}`]">
     <li class="page-item prev-page" :class="{disabled: value === 1}">
       <a class="page-link" aria-label="Previous" @click="prevPage">
@@ -16,6 +21,9 @@
       </a>
     </li>
   </ul>
+  </div>
+</div>
+
 </template>
 <script>
 export default {
@@ -97,7 +105,8 @@ export default {
   },
   data() {
     return {
-      defaultPagesToDisplay: 5
+      defaultPagesToDisplay: 5,
+      pageIndex: Number
     };
   },
   methods: {
@@ -109,26 +118,32 @@ export default {
       return arr;
     },
     changePage(item) {
-      this.$emit("input", item);
+      this.value = item;
+      this.$emit("changePage", item);
     },
     nextPage() {
-      if (this.value < this.totalPages) {
-        this.$emit("input", this.value + 1);
+      if (this.pageIndex < this.totalPages) {
+        this.pageIndex ++;
+        this.$emit("changePage", this.pageIndex + 1);
       }
     },
     prevPage() {
-      if (this.value > 1) {
-        this.$emit("input", this.value - 1);
+      if (this.pageIndex > 1) {
+        this.pageIndex --;
+        this.$emit("changePage", this.pageIndex - 1);
       }
     }
   },
   watch: {
-    perPage() {
-      this.$emit("input", 1);
-    },
-    total() {
-      this.$emit("input", 1);
-    }
+    // perPage() {
+    //   this.$emit("input", 1);
+    // },
+    // total() {
+    //   this.$emit("input", 1);
+    // }
+  },
+  created(){
+    this.pageIndex = this.value;
   }
 };
 </script>

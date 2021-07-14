@@ -18,7 +18,7 @@
               class="nav-item"
               :key="tab.id || tab.title">
 
-            <a data-toggle="tab"
+            <!-- <a data-toggle="tab"
                role="tab"
                class="nav-link"
                :href="`#${tab.id || tab.title}`"
@@ -27,7 +27,19 @@
                :class="{active: tab.active}">
               <tab-item-content :tab="tab">
               </tab-item-content>
-            </a>
+            </a> -->
+
+            <router-link
+                :to="tab.path"
+                class="nav-link"
+                :href="tab.path"
+                @click.prevent="activateTab(tab)"
+               :aria-selected="tab.active"
+               :class="{active: tab.active}"
+                >
+                <tab-item-content :tab="tab">
+                </tab-item-content>
+            </router-link>
 
           </li>
 
