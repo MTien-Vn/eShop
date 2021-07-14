@@ -5,12 +5,18 @@
        v-show="active"
        :aria-expanded="active">
     <slot></slot>
+    <router-link
+                :to="path"
+                class="nav-link"
+                :href="path"
+                >
+    </router-link>
   </div>
 </template>
 <script>
 export default {
   name: "tab-pane",
-  props: ["label", "id", "title"],
+  props: ["label", "id", "title", "path"],
   inject: ["addTab", "removeTab"],
   data() {
     return {

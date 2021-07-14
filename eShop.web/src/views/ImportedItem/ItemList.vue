@@ -19,38 +19,38 @@
                   tbody-classes="list"
                   :data="tableData">
         <template slot="columns">
-          <th>Vendor Code</th>
+          <th>Item Code</th>
+          <th>Item name</th>
+          <th>Unit</th>
+          <th>Category</th>
           <th>Vendor name</th>
-          <th>Phone number</th>
-          <th>Email</th>
-          <th>Address</th>
           <th></th>
         </template>
 
         <template slot-scope="{row}">
           <th scope="row">
             <div class="align-items-center">
-              {{row.vendor_code}}
+              {{row.item_code}}
             </div>
           </th>
           <td>
             <div class="align-items-center">
+              {{row.item_name}}
+            </div>
+          </td>
+          <td>
+            <div class="align-items-center">
+              {{row.unit}}
+            </div>
+          </td>
+          <td>
+            <div class="align-items-center">
+              {{row.category_name}}
+            </div>
+          </td>
+          <td>
+            <div class="align-items-center">
               {{row.vendor_name}}
-            </div>
-          </td>
-          <td>
-            <div class="align-items-center">
-              {{row.phone_number}}
-            </div>
-          </td>
-          <td>
-            <div class="align-items-center">
-              {{row.email}}
-            </div>
-          </td>
-          <td>
-            <div class="align-items-center">
-              {{row.address}}
             </div>
           </td>
 
@@ -73,18 +73,19 @@
       </base-table>
     </div>
 
-    <div class="card-footer d-flex justify-content-end"
+    <div class="card-footer"
          :class="type === 'dark' ? 'bg-transparent': ''">
-      <base-pagination total = "total_record" ></base-pagination>
+      <base-pagination :total="total_record" 
+                        @changePage="handleChangePage"></base-pagination>
     </div>
 
   </div>
 </template>
 <script>
-import vendorService from '../../service/ImportedItem/vendorService';
+import itemService from '../../service/ImportedItem/itemService';
 
   export default {
-    name: 'VendorList',
+    name: 'ItemList',
     props: {
       type: {
         type: String
@@ -94,18 +95,22 @@ import vendorService from '../../service/ImportedItem/vendorService';
     data() {
       return {
         tableData: [],
-        total_record: Number
+        total_record: Number,
       }
     },
     methods: {
-      initData(res){
+      async initData(page){
+        var res = await itemService.getItems(page,10);
+        res = res.data;
         this.tableData = res.items;
         this.total_record = res.total_record;
+      },
+      handleChangePage(page){
+        this.initData(page);
       }
     },
-    async created() {
-      var res = await vendorService.getVendors(1,10);
-      this.initData(res.data);
+    created() {
+      this.initData(1);
     }
   }
 </script>

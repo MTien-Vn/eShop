@@ -13,7 +13,7 @@
             path: '/dashboard'
           }"
         />
-        <sidebar-item :link="{name: 'Imported', icon: 'ni ni-shop text-blue', path: '/importedItem'}"/>
+        <sidebar-item :link="{name: 'Imported', icon: 'ni ni-shop text-blue', path: '/importItem'}"/>
         <sidebar-item :link="{name: 'Selling', icon: 'ni ni-cart text-blue', path: '/sellingItem'}"/>
         <sidebar-item :link="{name: 'System', icon: 'ni ni-settings text-blue', path: '/system'}"/>
         

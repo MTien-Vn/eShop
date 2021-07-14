@@ -44,9 +44,9 @@ Vue.use(vuex)
 Vue.use(ArgonDashboard)
 
 new Vue({
-    // created() {
-    //     this.$store.dispatch('CheckToken')
-    // },
+    created() {
+        this.$store.dispatch('checkToken')
+    },
     store,
     router,
     render: (h) => h(App),

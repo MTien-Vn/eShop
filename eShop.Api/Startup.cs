@@ -42,7 +42,8 @@ namespace eShop.Api
             // add scope repository
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepositoryImp<>));
             services.AddScoped<IVendorRepository, VendorRepositoryImp>();
-            services.AddScoped<IItemModelRepository, ItemModelRepositoryImp>();
+            services.AddScoped<IItemRepository, ItemRepositoryImp>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepositoryImp>();
             services.AddScoped<IStatisticTotalAmountByMonthRepository, StatisticTotalAmountByMonthRepositoryImp>();
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -51,7 +52,8 @@ namespace eShop.Api
             // add scope service
             services.AddScoped(typeof(IBaseService<>), typeof(BaseServiceImp<>));
             services.AddScoped<IVendorService, VendorServiceImp>();
-            services.AddScoped<IItemModelService, ItemModelServiceImp>();
+            services.AddScoped<IItemService, ItemServiceImp>();
+            services.AddScoped<IInvoiceService, InvoiceServiceImp>();
             services.AddScoped<IStatisticTotalAmountByMonthService, StatisticTotalAmountByMonthServiceImp>();
 
             services.AddScoped<IUserService, UserService>();
