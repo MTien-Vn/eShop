@@ -44,7 +44,8 @@ namespace eShop.Api
             services.AddScoped<IVendorRepository, VendorRepositoryImp>();
             services.AddScoped<IItemRepository, ItemRepositoryImp>();
             services.AddScoped<IInvoiceRepository, InvoiceRepositoryImp>();
-            services.AddScoped<IStatisticTotalAmountByMonthRepository, StatisticTotalAmountByMonthRepositoryImp>();
+            services.AddScoped<IStatisticRepository, StatisticRepositoryImp>();
+            services.AddScoped<IUserModelRepository, UserModelRepositoryImp>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
@@ -54,7 +55,8 @@ namespace eShop.Api
             services.AddScoped<IVendorService, VendorServiceImp>();
             services.AddScoped<IItemService, ItemServiceImp>();
             services.AddScoped<IInvoiceService, InvoiceServiceImp>();
-            services.AddScoped<IStatisticTotalAmountByMonthService, StatisticTotalAmountByMonthServiceImp>();
+            services.AddScoped<IStatisticService, StatisticServiceImp>();
+            services.AddScoped<IUserModelService, UserModelServiceImp>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();

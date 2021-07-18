@@ -42,7 +42,7 @@ import { router } from '../../router/router';
     },
     created(){
         //router.push('importedItem/vendor');
-        router.push('importItem/vendor');
+        router.push('importItem/item');
     }
   };
 </script>

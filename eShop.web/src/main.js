@@ -31,7 +31,7 @@ axios.interceptors.response.use(response => {
     if (error.response.status === 401) {
         console.log("401 interceptors")
             //place your reentry code
-        store.dispatch("LogOut");
+        store.dispatch("logout");
         router.push("/login"); //redirect to dashboard route
     }
     return error;

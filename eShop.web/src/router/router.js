@@ -26,7 +26,7 @@ export const router = new Router({
                     // this generates a separate chunk (about.[hash].js) for this route
                     // which is lazy-loaded when the route is visited.
                     component: () =>
-                        import ( /* webpackChunkName: "demo" */ '../views/Dashboard.vue'),
+                        import ( /* webpackChunkName: "demo" */ '../views/Dashboard/Dashboard.vue'),
                     meta: {
                         authRequired: true
                     }
@@ -44,20 +44,20 @@ export const router = new Router({
                     path: '/profile',
                     name: 'profile',
                     component: () =>
-                        import ( /* webpackChunkName: "demo" */ '../views/UserProfile.vue'),
+                        import ( /* webpackChunkName: "demo" */ '../views/UserProfile/UserProfile.vue'),
                     meta: {
                         authRequired: false
                     }
                 },
-                {
-                    path: '/maps',
-                    name: 'maps',
-                    component: () =>
-                        import ( /* webpackChunkName: "demo" */ '../views/Maps.vue'),
-                    meta: {
-                        authRequired: true
-                    }
-                },
+                // {
+                //     path: '/maps',
+                //     name: 'maps',
+                //     component: () =>
+                //         import ( /* webpackChunkName: "demo" */ '../views/Maps.vue'),
+                //     meta: {
+                //         authRequired: true
+                //     }
+                // },
                 {
                     path: '/tables',
                     name: 'tables',
@@ -84,6 +84,7 @@ export const router = new Router({
                             name: "Vendor",
                             component: () =>
                                 import ( /* webpackChunkName: "demo" */ '../views/ImportedItem/VendorList.vue'),
+                            meta: { authorize: [Role.Admin] }
                         },
                         {
                             path: "item",
@@ -181,8 +182,9 @@ router.beforeEach((to, from, next) => {
     if (authorize) {
         // check if route is restricted by role
         if (authorize.length && !authorize.includes(user.roles.toString())) {
-            // role not authorised so redirect to home page
-            return next({ path: '/' });
+            alert("You dont have permission to access. Ask admin to get it !")
+                // role not authorised so redirect to home page
+            return next(from);
         }
     }
 

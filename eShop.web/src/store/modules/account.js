@@ -18,8 +18,6 @@ const getters = {
 
 const actions = {
     login({ dispatch, commit }, { user_name, pass_word }) {
-        commit('loginRequest', { user_name });
-
         userService.login(user_name, pass_word)
             .then(
                 response => {
@@ -69,10 +67,6 @@ const actions = {
 };
 
 const mutations = {
-    loginRequest(state, user) {
-        state.status = { loggingIn: true };
-        state.user = user;
-    },
     loginSuccess(state, user) {
         state.status = { loggedIn: true };
         state.user = user;
