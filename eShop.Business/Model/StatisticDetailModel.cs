@@ -1,6 +1,10 @@
-﻿namespace eShop.Business.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace eShop.Business.Model
 {
-    public class Statistic_Total_Amount_By_Month
+    public class StatisticDetailModel
     {
         public double january { get; set; }
         public double fecbuary { get; set; }

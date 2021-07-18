@@ -4,9 +4,9 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Total traffic"
+                    <stats-card title="Total cost"
                                 type="gradient-red"
-                                sub-title="350,897"
+                                :sub-title="totalCost"
                                 icon="ni ni-active-40"
                                 class="mb-4 mb-xl-0"
                     >
@@ -18,9 +18,9 @@
                     </stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Total traffic"
+                    <stats-card title="Total Revenue"
                                 type="gradient-orange"
-                                sub-title="2,356"
+                                :sub-title="totalRevenue"
                                 icon="ni ni-chart-pie-35"
                                 class="mb-4 mb-xl-0"
                     >
@@ -32,9 +32,9 @@
                     </stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Sales"
+                    <stats-card title="Total profit"
                                 type="gradient-green"
-                                sub-title="924"
+                                :sub-title="totalProfit"
                                 icon="ni ni-money-coins"
                                 class="mb-4 mb-xl-0"
                     >
@@ -46,7 +46,7 @@
                     </stats-card>
 
                 </div>
-                <div class="col-xl-3 col-lg-6">
+                <!-- <div class="col-xl-3 col-lg-6">
                     <stats-card title="Performance"
                                 type="gradient-info"
                                 sub-title="49,65%"
@@ -59,13 +59,13 @@
                             <span class="text-nowrap">Since last month</span>
                         </template>
                     </stats-card>
-                </div>
+                </div> -->
             </div>
         </base-header>
 
         <!--Charts-->
         <div class="container-fluid mt--7">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-xl-8 mb-5 mb-xl-0">
                     <card type="default" header-classes="bg-transparent">
                         <div slot="header" class="row align-items-center">
@@ -124,7 +124,7 @@
                         </bar-chart>
                     </card>
                 </div>
-            </div>
+            </div> -->
             <!-- End charts-->
 
             <!--Tables-->
@@ -144,17 +144,21 @@
 <script>
   // Charts
   import * as chartConfigs from '@/components/Charts/config';
-  import LineChart from '@/components/Charts/LineChart';
-  import BarChart from '@/components/Charts/BarChart';
+  //import LineChart from '@/components/Charts/LineChart';
+  //import BarChart from '@/components/Charts/BarChart';
 
   // Tables
-  import SocialTrafficTable from './Dashboard/SocialTrafficTable';
-  import PageVisitsTable from './Dashboard/PageVisitsTable';
+  import SocialTrafficTable from './SocialTrafficTable';
+  import PageVisitsTable from './PageVisitsTable';
+
+  //service
+  import GetStatisticService from '../../service/dashboardService/dashBoardService.js';
+  import utils from '../../helper/utils.js';
 
   export default {
     components: {
-      LineChart,
-      BarChart,
+      //LineChart,
+      //BarChart,
       PageVisitsTable,
       SocialTrafficTable,
     },
@@ -180,7 +184,10 @@
               data: [25, 20, 30, 22, 17, 29]
             }]
           }
-        }
+        },
+        totalCost: '',
+        totalRevenue: '',
+        totalProfit: '',
       };
     },
     methods: {
@@ -196,10 +203,20 @@
         };
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
+      },
+      async initData(){
+        var res = await GetStatisticService.getTotalCostRevenueProfit(2018);
+        var data = res.data;
+        this.totalCost = utils.converMoneyToString(data.cost);
+        this.totalRevenue = utils.converMoneyToString(data.revenue);
+        this.totalProfit = utils.converMoneyToString(data.profit);
       }
     },
     mounted() {
       this.initBigChart(0);
+    },
+    created(){
+      this.initData();
     }
   };
 </script>

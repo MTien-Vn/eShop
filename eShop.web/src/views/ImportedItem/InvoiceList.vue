@@ -95,6 +95,7 @@
 </template>
 <script>
 import getInvoices from '../../service/ImportedItem/invoiceService';
+import utils from '../../helper/utils.js';
 
   export default {
     name: 'ItemList',
@@ -115,6 +116,13 @@ import getInvoices from '../../service/ImportedItem/invoiceService';
         var res = await getInvoices.getInvoices(page,10);
         res = res.data;
         this.tableData = res.items;
+        for (let index = 0; index < this.tableData.length; index++) {
+          const element = this.tableData[index];
+          element.amount = utils.converMoneyToString(element.amount);
+          element.total_amount = utils.converMoneyToString(element.total_amount);
+          element.tax = utils.converMoneyToString(element.tax);
+          element.date_imported = utils.converDateToString(element.date_imported);
+        }
         this.total_record = res.total_record;
       },
       handleChangePage(page){

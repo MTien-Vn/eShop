@@ -78,6 +78,7 @@ namespace eShop.Business.System.Service
             var loginResponse = new LoginResponse();
             loginResponse.token = data;
             loginResponse.roles = arrRoles;
+            loginResponse.userName = result.user_name;
 
             sr.MisaCode = MyEnum.Scuccess;
             sr.Messenger.Add(Resources.signIn_sucess);

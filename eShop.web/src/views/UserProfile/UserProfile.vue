@@ -1,16 +1,14 @@
 <template>
     <div>
         <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-                     style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+                     style="min-height: 300px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
             <span class="mask bg-gradient-success opacity-8"></span>
             <!-- Header container -->
             <div class="container-fluid d-flex align-items-center">
                 <div class="row">
-                    <div class="col-lg-7 col-md-10">
+                    <div class="col-lg-12">
                         <h1 class="display-2 text-white">Hello {{ model.name }}</h1>
-                        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-                        <a href="#!" class="btn btn-info">Edit profile</a>
                     </div>
                 </div>
             </div>
@@ -18,7 +16,7 @@
 
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <!-- <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
 
                     <div class="card card-profile shadow">
                         <div class="row justify-content-center">
@@ -74,9 +72,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-xl-8 order-xl-1">
+                <div class="col-xl-12 order-xl-1">
                     <card shadow type="secondary">
                         <div slot="header" class="bg-white border-0">
                             <div class="row align-items-center">
@@ -106,6 +104,22 @@
                                                         placeholder="Name"
                                                         input-classes="form-control-alternative"
                                                         v-model="model.name" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="Code"
+                                                        placeholder="Code"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.code" />
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="Indentify Number"
+                                                        placeholder="Indentify Number"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.identifynumber" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -162,38 +176,70 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <base-input alternative=""
-                                                        label="City"
-                                                        placeholder="City"
+                                                        label="Phone number"
+                                                        placeholder="Phone number"
                                                         input-classes="form-control-alternative"
-                                                        v-model="model.city" />
+                                                        v-model="model.phonenumber" />
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <base-input alternative=""
-                                                        label="Country"
-                                                        placeholder="Country"
+                                                        label="Email"
+                                                        placeholder="Email"
                                                         input-classes="form-control-alternative"
-                                                        v-model="model.country" />
+                                                        v-model="model.email" />
                                         </div>
-                                        <div class="col-lg-4">
-                                            <base-input alternative=""
-                                                        label="Postal code"
-                                                        placeholder="Postal code"
-                                                        input-classes="form-control-alternative"
-                                                        v-model="model.zipCode" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <button class="btn btn-info" @click="updateContacInformation">Save</button>
                                         </div>
                                     </div>
                                 </div>
                                 <hr class="my-4" />
                                 <!-- Description -->
-                                <h6 class="heading-small text-muted mb-4">About me</h6>
+                                <!-- <h6 class="heading-small text-muted mb-4">About me</h6>
                                 <div class="pl-lg-4">
                                     <div class="form-group">
                                         <base-input alternative=""
                                                     label="About Me">
                                             <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
                                         </base-input>
+                                    </div>
+                                </div> -->
+                                <!-- Other iformation -->
+                                <h6 class="heading-small text-muted mb-4">Other information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <base-input alternative=""
+                                                        label="Shift"
+                                                        placeholder="Shift"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.shift" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <base-input alternative=""
+                                                        label="Join date"
+                                                        placeholder="join date"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.joindate" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <base-input alternative=""
+                                                        label="Group Name"
+                                                        placeholder="Group Name"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.groupname" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <base-input alternative=""
+                                                        label="Base salary"
+                                                        placeholder="Base salary"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.basesalary" />
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -206,7 +252,8 @@
 </template>
 <script>
     import { mapActions } from "vuex";
-
+    import profileService from '../../service/userProfileService/profileService.js';
+    import utils from '../../helper/utils.js';
     export default {
 
         name: 'user-profile',
@@ -216,16 +263,20 @@
         data() {
             return {
                 model: {
-                    username: '',
+                    code: '',
                     name: '',
-                    currentUsername: '',
                     address: '',
-                    city: '',
-                    country: '',
-                    zipCode: '',
-                    about: '',
-                    currentPassword: '',
+                    phonemumber: '',
+                    email: '',
+                    identifynumber: '',
+                    shift: '',
+                    joindate: '',
+                    groupname: '',
+                    basesalary: '',
+                    username: '',
                     newPassword: '',
+                    currentUsername: '',
+                    currentPassword: '',
                     validatePassword: '',
                 }
             }
@@ -245,6 +296,19 @@
                 //     await this.$store.dispatch("LogOut");
                 //     this.$router.push("/login");//redirect to dashboard route
                 // }
+                const loggedIn = localStorage.getItem('user');
+                var user = JSON.parse(loggedIn);
+                var userName = user.userName.toString();
+                var result = await profileService.getProfile(userName);
+
+                result.data.data[0].joindate = utils.converDateToString(result.data.data[0].joindate);
+                result.data.data[0].basesalary = utils.converMoneyToString(result.data.data[0].basesalary);
+                result.data.data[0].shift = utils.convertShift(result.data.data[0].shift);
+
+                this.model = result.data.data[0];
+                // this.model.joindate = dateString;
+                // this.model.basesalary = salaryString;
+                // this.model.shift = shift;
             },
 
             ...mapActions(["UpdateProfile"]),
@@ -305,7 +369,14 @@
 
             resetValidatePassword() {
                 this.model.validatePassword = "";
-            }
+            },
+
+            updateContacInformation(){
+
+            },
+        },
+        created(){
+            this.init();
         }
     };
 </script>
