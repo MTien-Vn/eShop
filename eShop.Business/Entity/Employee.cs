@@ -7,7 +7,7 @@ namespace eShop.Business.Entity
     /// <summary>
     /// enttity ứng với bảng trong db
     /// </summary>
-    public class Employee : IdentityUser<Guid>
+    public class Employee
     {
         public string employee_id { get; set; }
 

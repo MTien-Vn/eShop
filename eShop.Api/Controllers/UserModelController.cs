@@ -23,7 +23,7 @@ namespace eShop.Api.Controllers
             userModelService = _service;
         }
         [HttpGet("{userName}")]
-        public async Task<ServiceResponse> GetStatisticCostRevenueProfitByYear(string userName)
+        public async Task<ServiceResponse> GetUserModel(string userName)
         {
             ServiceResponse sr = new ServiceResponse();
             var model = await userModelService.GetUserModel(userName);

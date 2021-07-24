@@ -73,12 +73,9 @@ namespace eShop.Business.ServiceImp
             if (serviceResponse.MisaCode == MyEnum.Scuccess)
             {
                 var result = await baseRepository.InsertEntity(entity);
-                if (result != null)
-                {
-                    serviceResponse.MisaCode = MyEnum.False;
-                    serviceResponse.Messenger.Add(Resources.False);
-                    serviceResponse.Data = result;
-                }
+                serviceResponse.MisaCode = MyEnum.Scuccess;
+                serviceResponse.Messenger.Add(Resources.Success);
+                serviceResponse.Data = result;
             }
             else
             {
@@ -96,12 +93,9 @@ namespace eShop.Business.ServiceImp
             if (serviceResponse.MisaCode == MyEnum.Scuccess)
             {
                 var result = await baseRepository.UpdateEntity(entity);
-                if(result != null)
-                {
-                    serviceResponse.MisaCode = MyEnum.False;
-                    serviceResponse.Messenger.Add(Resources.False);
-                    serviceResponse.Data = result;
-                }
+                serviceResponse.MisaCode = MyEnum.False;
+                serviceResponse.Messenger.Add(Resources.False);
+                serviceResponse.Data = result;
             }
             else
             {

@@ -19,17 +19,21 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Collections;
 using eShop.Business.System.UserResponse;
+using eShop.Business.Model;
+using eShop.Business.ValidateData;
 
 namespace eShop.Business.System.Service
 {
     public class UserService : BaseServiceImp<User>, IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUser_RoleService _userRoleService;
         private readonly IConfiguration _config;
 
-        public UserService(IUserRepository userRepository, IConfiguration config) : base(userRepository)
+        public UserService(IUser_RoleService userRoleService, IUserRepository userRepository, IConfiguration config) : base(userRepository)
         {
             _userRepository = userRepository;
+            _userRoleService = userRoleService;
             _config = config;
         }
         public async Task<ServiceResponse> Authencate(LoginRequest request)
@@ -121,12 +125,55 @@ namespace eShop.Business.System.Service
         {
             var dbConnection = _userRepository.GetDBConnection();
 
-            var storeName = $"func_get_role";
+            var storeName = $"func_get_role_by_user_name";
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@_user_name", name_key);
 
             var entities = await dbConnection.QueryAsync<Role>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
             return (List<Role>)entities;
+        }
+
+        public async Task<ServiceResponse> CreateUser(RegisterModel registerModel)
+        {
+            ServiceResponse sr = new ServiceResponse();
+            if (string.IsNullOrEmpty(registerModel.RoleId))
+            {
+                sr.MisaCode = MyEnum.False;
+                sr.Messenger.Add(Resources.Error_Role_id_not_null);
+                return sr;
+            }
+            var resultInsertUser = await this.InsertT(registerModel.user);
+            if(resultInsertUser.MisaCode == MyEnum.Scuccess)
+            {
+                var user_role = new User_role();
+                user_role.user_id = (resultInsertUser.Data as User).user_id;
+                user_role.role_id = registerModel.RoleId;
+                
+                var resultInsertUserRole = await _userRoleService.InsertT(user_role);
+                if(resultInsertUserRole.MisaCode == MyEnum.Scuccess)
+                {
+                    sr.MisaCode = MyEnum.Scuccess;
+                    sr.Messenger.Add(Resources.Success);
+                    sr.Data = resultInsertUser.Data;
+                }
+                else
+                {
+                    List<string> fieldName = new List<string>();
+                    List<string> values = new List<string>();
+                    fieldName.Add("user_name");
+                    values.Add(registerModel.user.user_name);
+                    await this.DeleteT(fieldName, values);
+
+                    sr.MisaCode = MyEnum.False;
+                    sr.Messenger.Add(Resources.Error_Insert_User_Role);
+                }
+            }
+            else
+            {
+                sr.MisaCode = MyEnum.False;
+                sr.Messenger.Add(resultInsertUser.Messenger.FirstOrDefault());
+            }
+            return sr;
         }
     }
 }

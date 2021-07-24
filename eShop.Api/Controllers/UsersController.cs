@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using eShop.Business.ServiceRes;
 using eShop.Business.Entity.System;
+using eShop.Business.Model;
 
 namespace eShop.Api.Controllers
 {
@@ -34,6 +35,12 @@ namespace eShop.Api.Controllers
         {
             return await _userService.Register(request);
 
+        }
+
+        [HttpPost("createUser")]
+        public async Task<ServiceResponse> CreateUser([FromBody] RegisterModel registerModel)
+        {
+            return await _userService.CreateUser(registerModel);
         }
     }
 }
