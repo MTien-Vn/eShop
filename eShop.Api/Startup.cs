@@ -9,6 +9,7 @@ using eShop.Business.ServiceImp.VendorServiceImp;
 using eShop.Business.System.Service;
 using eShop.Repository.DBConnectorImp;
 using eShop.Repository.RepositoryImp;
+using eShop.Repository.RepositoryImp.System;
 using eShop.Repository.RepositoryImp.VendorRepositoryImp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +50,7 @@ namespace eShop.Api
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUser_RoleRepository, User_RoleRepository>();
 
             // add scope service
             services.AddScoped(typeof(IBaseService<>), typeof(BaseServiceImp<>));
@@ -60,6 +62,7 @@ namespace eShop.Api
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUser_RoleService, User_RoleService>();
 
             /*services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();*/

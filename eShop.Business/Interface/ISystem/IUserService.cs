@@ -1,5 +1,6 @@
 ﻿using eShop.Business.Entity.System;
 using eShop.Business.Interface.IService;
+using eShop.Business.Model;
 using eShop.Business.ServiceRes;
 using eShop.Business.System.UsersRequest;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace eShop.Business.Interface.ISystem
 
         Task<User> SignInUser(string name_key, string pass_word);
 
-        Task<List<Role>> GetRoles(string name_key);  
+        Task<List<Role>> GetRoles(string name_key);
+
+        Task<ServiceResponse> CreateUser(RegisterModel registerModel);
     }
 }

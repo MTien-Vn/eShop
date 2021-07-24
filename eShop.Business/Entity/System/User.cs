@@ -16,6 +16,8 @@ namespace eShop.Business.Entity.System
         [Required("pass_word", ErrorMesseger = "pass_word không được trống")]
         public string pass_word { get; set; }
 
+        [CheckDup("Employee_id", ErrorMesseger = "Employee_id không được trùng")]
+        [CheckSys("system", ErrorMesseger = " ")]
         public string employee_id { get; set; }
     }
 }

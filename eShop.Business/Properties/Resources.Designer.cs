@@ -151,6 +151,15 @@ namespace eShop.Business.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lỗi insert User_role.
+        /// </summary>
+        public static string Error_Insert_User_Role {
+            get {
+                return ResourceManager.GetString("Error_Insert_User_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lỗi thêm ncc_ vật phẩm.
         /// </summary>
         public static string Error_Insert_Vendor_Item {
@@ -165,6 +174,15 @@ namespace eShop.Business.Properties {
         public static string Error_NotExist {
             get {
                 return ResourceManager.GetString("Error_NotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role cant be null or empty.
+        /// </summary>
+        public static string Error_Role_id_not_null {
+            get {
+                return ResourceManager.GetString("Error_Role_id_not_null", resourceCulture);
             }
         }
         

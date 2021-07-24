@@ -108,11 +108,11 @@ namespace eShop.Business.ValidateData
                 //build câu sql 
                 foreach (var propertyName in propCheckDupPair)
                 {
-                    sqlCheckDupPair.Append(propertyName);
+                    sqlCheckDupPair.Append(propertyName.Name);
                     sqlCheckDupPair.Append(' ');
                 }
                 sqlCheckDupPair.Append($"FROM {typeof(T).Name.ToLower()} WHERE ");
-                for (int i = 0; i < sqlCheckDupPair.Length; i++)
+                for (int i = 0; i < propCheckDupPair.Count; i++)
                 {
                     if (i != 0)
                     {

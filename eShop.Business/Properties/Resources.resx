@@ -147,11 +147,17 @@
   <data name="Error_Get_count_entity" xml:space="preserve">
     <value>lỗi lấy tổng số dòng trong bảng</value>
   </data>
+  <data name="Error_Insert_User_Role" xml:space="preserve">
+    <value>Lỗi insert User_role</value>
+  </data>
   <data name="Error_Insert_Vendor_Item" xml:space="preserve">
     <value>Lỗi thêm ncc_ vật phẩm</value>
   </data>
   <data name="Error_NotExist" xml:space="preserve">
     <value>Không tồn tại</value>
+  </data>
+  <data name="Error_Role_id_not_null" xml:space="preserve">
+    <value>Role cant be null or empty</value>
   </data>
   <data name="Exception_User_Mess" xml:space="preserve">
     <value>Vui lòng liên hệ Misa để nhận trợ giúp</value>
