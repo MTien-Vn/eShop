@@ -6,8 +6,8 @@ export const userService = {
     login,
     logout,
     register,
-    getAll,
-    getById,
+    getUserModel,
+    getRole,
     update,
     delete: _delete
 };
@@ -52,33 +52,38 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function register(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch(`${baseUrl}/Users/register`, requestOptions).then(handleResponse);
+async function register(user) {
+    var rs = await axios.post(baseUrl + '/Users/createUser', user);
+    var response = rs.data;
+    if (response.misaCode !== 200) {
+        //location.reload(true);
+        alert(response.messenger);
+        return;
+    }
+    alert(response.messenger);
+    return response.data;
 }
 
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${baseUrl}/users`, requestOptions).then(handleResponse);
+async function getUserModel(page, limmit) {
+    var rs = await axios.get(baseUrl + '/UserModel/' + page + '/' + limmit);
+    var response = rs.data;
+    if (response.misaCode !== 200) {
+        //location.reload(true);
+        alert(response.messenger);
+        return;
+    }
+    return response;
 }
 
-
-function getById(id) {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${baseUrl}/users/${id}`, requestOptions).then(handleResponse);
+async function getRole(page, limmit) {
+    var rs = await axios.get(baseUrl + '/Role/' + page + '/' + limmit);
+    var response = rs.data;
+    if (response.misaCode !== 200) {
+        //location.reload(true);
+        alert(response.messenger);
+        return;
+    }
+    return response.data;
 }
 
 function update(user) {

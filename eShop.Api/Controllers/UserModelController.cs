@@ -25,12 +25,13 @@ namespace eShop.Api.Controllers
         [HttpGet("{userName}")]
         public async Task<ServiceResponse> GetUserModel(string userName)
         {
-            ServiceResponse sr = new ServiceResponse();
-            var model = await userModelService.GetUserModel(userName);
-            sr.Data = model;
-            sr.MisaCode = MyEnum.Scuccess;
+            return await userModelService.GetUserModelByUserName(userName);
+        }
 
-            return sr;
+        [HttpGet("{page}/{limmit}")]
+        public async Task<ServiceResponse> GetUserModel(long page, long limmit)
+        {
+            return await userModelService.GetUerModels(limmit, page);
         }
     }
 }

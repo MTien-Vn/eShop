@@ -9,6 +9,8 @@ namespace eShop.Business.Interface.IService
 {
     public interface IUserModelService
     {
-        Task<ServiceResponse> GetUserModel(string userName);
+        Task<ServiceResponse> GetUserModelByUserName(string userName);
+
+        Task<ServiceResponse> GetUerModels(long limmit, long offset);
     }
 }
