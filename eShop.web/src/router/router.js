@@ -72,7 +72,20 @@ export const router = new Router({
                     name: "System",
                     component: () =>
                         import ( /* webpackChunkName: "demo" */ '../views/System/SystemLayout.vue'),
-                    meta: { authorize: [Role.Admin] }
+                    meta: { authorize: [Role.Admin] },
+                    children: [{
+                            path: 'users',
+                            name: 'users',
+                            component: () =>
+                                import ( /* webpackChunkName: "demo" */ '../views/System/Users.vue')
+                        },
+                        {
+                            path: 'assignRole',
+                            name: 'assignRole',
+                            component: () =>
+                                import ( /* webpackChunkName: "demo" */ '../views/System/AssignRole.vue')
+                        }
+                    ]
                 },
                 {
                     path: "/importItem",

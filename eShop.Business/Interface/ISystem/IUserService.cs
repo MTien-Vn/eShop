@@ -21,5 +21,6 @@ namespace eShop.Business.Interface.ISystem
         Task<List<Role>> GetRoles(string name_key);
 
         Task<ServiceResponse> CreateUser(RegisterModel registerModel);
+
     }
 }

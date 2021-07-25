@@ -1,7 +1,7 @@
 <template>
 <div class="row">
   <div class="col-8 align-items-center">
-    Display {{(value - 1 )*perPage + 1}} - {{value * perPage}} / {{total}} record
+    Display {{(value - 1 )*perPage + 1}} - {{total > value * perPage ? value*perPage : total}} / {{total}} record
   </div>
   <div class="col-4 justify-content-end">
   <ul class="pagination" :class="[size && `pagination-${size}`, align && `justify-content-${align}`]">
@@ -42,7 +42,6 @@ export default {
         "Pagination per page. Should be specified with total or pageCount"
     },
     total: {
-      type: Number,
       default: 0,
       description:
         "Can be specified instead of pageCount. The page count in this case will be total/perPage"

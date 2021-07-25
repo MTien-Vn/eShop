@@ -6,17 +6,7 @@
             <tab-pane title="Item" path='item'></tab-pane>
             <tab-pane title="Invoice" path='invoice'></tab-pane>
           </tabs>
-          <!-- <router-link to="/importedItem/vendor" class="tab-pane fade"></router-link>
-          <router-link to="/importedItem/item"></router-link> -->
         </base-header>
-
-        <!-- <div class="container-fluid mt--7">
-            <div class="row">
-                <div class="col">
-                    <VendorList title="Vendor list"></VendorList>
-                </div>
-            </div>
-        </div> -->
 
         <div class="container-fluid mt--7">
             <div class="row">

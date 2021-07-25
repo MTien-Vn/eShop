@@ -46,7 +46,7 @@ namespace eShop.Repository.DBConnectorImp
                 dynamicParameters.Add("@limmit", limmit);
                 if (values == null)
                 {
-                    var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                    var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                     transaction.Commit();
                     return entities;
                 }
@@ -62,7 +62,7 @@ namespace eShop.Repository.DBConnectorImp
                         dynamicParameters.Add($"@{fielNameLowwer}", _values.GetValue(index));
                         index++;
                     }
-                    var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                    var entities = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                     transaction.Commit();
                     return entities;
                 }
@@ -83,7 +83,7 @@ namespace eShop.Repository.DBConnectorImp
             using var transaction = dbConnection.BeginTransaction();
             try
             {
-                var entity = await dbConnection.QueryAsync<T>(sql);
+                var entity = await dbConnection.QueryAsync<T>(sql, transaction: transaction);
                 transaction.Commit();
                 return entity;
             }
@@ -135,7 +135,7 @@ namespace eShop.Repository.DBConnectorImp
 
                     dynamicParameters.Add($"@{propertyName}", propertyValue);
                 }
-                var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                 transaction.Commit();
                 return affects.FirstOrDefault();
             }
@@ -178,7 +178,7 @@ namespace eShop.Repository.DBConnectorImp
                     }
                     dynamicParameters.Add($"@{propertyName}", propertyValue);
                 }
-                var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                var affects = await dbConnection.QueryAsync<T>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                 transaction.Commit();
                 return affects.FirstOrDefault();
             }
@@ -210,7 +210,7 @@ namespace eShop.Repository.DBConnectorImp
                     dynamicParameters.Add($"@{fielNameLowwer}", values[index]);
                     index++;
                 }
-                var affect = await dbConnection.ExecuteAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                var affect = await dbConnection.ExecuteAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                 transaction.Commit();
                 return affect;
             }
@@ -235,7 +235,7 @@ namespace eShop.Repository.DBConnectorImp
                 if (values == null)
                 {
                     var storeName = $"func_count_{tableName}";
-                    long total = (long)await dbConnection.ExecuteScalarAsync(storeName, commandType: CommandType.StoredProcedure);
+                    long total = (long)await dbConnection.ExecuteScalarAsync(storeName, commandType: CommandType.StoredProcedure, transaction: transaction);
                     transaction.Commit();
                     return total;
                 }
@@ -260,7 +260,7 @@ namespace eShop.Repository.DBConnectorImp
                             index++;
                         }
                     }
-                    long total = (long)await dbConnection.ExecuteScalarAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+                    long total = (long)await dbConnection.ExecuteScalarAsync(storeName, dynamicParameters, commandType: CommandType.StoredProcedure, transaction: transaction);
                     transaction.Commit();
                     return total;
                 }
